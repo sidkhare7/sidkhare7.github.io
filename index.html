@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siddharth Khare</title>
+<style>
+  :root {
+    --bg: #F8F8F6;
+    --surface: #FFFFFF;
+    --border: #E4E4E0;
+    --accent: #1A6B47;
+    --accent-light: #EDF5F0;
+    --text: #181816;
+    --muted: #64645F;
+    --subtle: #9A9A94;
+    --tag-bg: #EEF4F1;
+    --tag-text: #1A6B47;
+    --purple-bg: #F2F1FC;
+    --purple-text: #4640A8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 740px; margin: 0 auto; padding: 0 28px; }
+
+  /* NAV */
+  nav {
+    padding: 30px 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+  .nav-name { font-size: 15px; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: -.01em; }
+  .nav-links { display: flex; gap: 22px; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero { display: flex; gap: 36px; align-items: flex-start; margin-bottom: 68px; }
+  .hero-photo {
+    width: 100px; height: 100px; border-radius: 50%;
+    border: 2px solid var(--border);
+    background: #E8E8E4;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; flex-shrink: 0; overflow: hidden;
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero-text h1 { font-size: 26px; font-weight: 700; letter-spacing: -.03em; color: var(--text); margin-bottom: 4px; line-height: 1.2; }
+  .hero-role { font-size: 13.5px; color: var(--muted); margin-bottom: 13px; }
+  .hero-bio { font-size: 14.5px; color: var(--muted); line-height: 1.8; margin-bottom: 18px; max-width: 480px; }
+  .hero-links { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-links a { font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 500; transition: opacity .15s; }
+  .hero-links a:hover { opacity: .65; }
+
+  /* SECTION */
+  section { margin-bottom: 60px; }
+  .section-title { font-size: 11px; font-weight: 600; color: var(--subtle); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 20px; }
+
+  /* INTERESTS */
+  .interest-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .interest-item { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 14px 16px; }
+  .interest-label { font-size: 10px; font-weight: 700; color: var(--subtle); text-transform: uppercase; letter-spacing: .09em; display: block; margin-bottom: 6px; }
+  .interest-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* PROJECTS */
+  .project-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin-bottom: 10px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .project-item:hover { border-color: #BCCEC5; box-shadow: 0 2px 14px rgba(0,0,0,.04); }
+  .project-name { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -.01em; margin-bottom: 8px; line-height: 1.3; }
+  .project-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+  .project-desc b { color: var(--text); font-weight: 500; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .tag { font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 20px; }
+  .tag-green { background: var(--tag-bg); color: var(--tag-text); }
+  .tag-purple { background: var(--purple-bg); color: var(--purple-text); }
+  .tag-gray { background: #F0F0EE; color: #64645F; }
+  .project-meta { font-size: 11.5px; color: var(--subtle); line-height: 1.5; }
+  .project-meta b { color: var(--muted); font-weight: 500; }
+
+  /* PUBLICATIONS */
+  .pub-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin-bottom: 10px; }
+  .pub-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+  .pub-meta { font-size: 12.5px; color: var(--muted); }
+  .pub-badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-left: 7px; vertical-align: middle; }
+  .badge-pub { background: var(--accent-light); color: var(--accent); }
+  .badge-sub { background: var(--purple-bg); color: var(--purple-text); }
+
+  /* EXPERIENCE */
+  .exp-item { display: flex; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
+  .exp-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .exp-date { width: 44px; flex-shrink: 0; font-size: 12px; color: var(--subtle); padding-top: 2px; font-weight: 500; }
+  .exp-body { flex: 1; }
+  .exp-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 1px; }
+  .exp-org { font-size: 12.5px; color: var(--accent); font-weight: 500; margin-bottom: 4px; }
+  .exp-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 28px 0 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12.5px; color: var(--subtle); }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  @media(max-width:620px){
+    .hero { flex-direction: column; gap: 18px; }
+    .interest-grid { grid-template-columns: 1fr; }
+    nav { flex-direction: column; gap: 14px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav>
+  <a class="nav-name" href="#">Siddharth Khare</a>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#papers">Papers</a>
+    <a href="#experience">Experience</a>
+    <a href="mailto:sidkhare@umd.edu">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-photo">
+    <img src="photo.jpg" alt="Siddharth Khare" onerror="this.style.display='none'">
+    🧑‍💻
+  </div>
+  <div class="hero-text">
+    <h1>Siddharth Khare</h1>
+    <div class="hero-role">Researcher · Builder · University of Maryland</div>
+    <p class="hero-bio">I research decentralized systems, blockchain security, and trustworthy AI. I care about building systems where trust is earned algorithmically — from fraud detection in Ethereum to reputation engines and decentralized prediction markets.</p>
+    <div class="hero-links">
+      <a href="https://github.com/sidkhare7" target="_blank">GitHub ↗</a>
+      <a href="https://linkedin.com/in/siddharth-khare-45a50b194/" target="_blank">LinkedIn ↗</a>
+      <a href="mailto:sidkhare@umd.edu">sidkhare@umd.edu</a>
+    </div>
+  </div>
+</div>
+
+<section id="interests">
+  <div class="section-title">Research Interests</div>
+  <div class="interest-grid">
+    <div class="interest-item">
+      <span class="interest-label">Core</span>
+      <div class="interest-body">Decentralized systems, blockchain security, trustworthy AI, distributed infrastructure</div>
+    </div>
+    <div class="interest-item">
+      <span class="interest-label">Active</span>
+      <div class="interest-body">P2P networks, Tribler, consensus protocols, decentralized AI, prediction markets</div>
+    </div>
+    <div class="interest-item">
+      <span class="interest-label">Learning</span>
+      <div class="interest-body">TEEs, learn-to-rank, federated learning, vector search, semantic retrieval</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-title">Applied Projects</div>
+
+  <div class="project-item">
+    <div class="project-name">On-Chain Reputation Engine — Zeno Labs</div>
+    <p class="project-desc">Scores DeFi wallets by z-normalised on-chain behavior — holding duration, value, volume — weighted by market cap. High-reputation wallets gate community access. Sybil-resistant by design. Built in Rust and Solidity.</p>
+    <div class="tags">
+      <span class="tag tag-purple">Reputation Systems</span>
+      <span class="tag tag-green">Solidity</span>
+      <span class="tag tag-gray">Rust</span>
+      <span class="tag tag-gray">DeFi</span>
+    </div>
+    <div class="project-meta"><b>$10k grant</b> from Northeastern IDEA Ventures · Zeno Labs, 2025</div>
+  </div>
+
+  <div class="project-item">
+    <div class="project-name">Abracast — AI-Resolved Prediction Market</div>
+    <p class="project-desc">Prediction market that resolves outcomes via an <b>on-chain LLM oracle</b> — no human dispute resolution. Explores which questions AI can reliably answer versus those it cannot. Bribery-resistant by design. Deployed on Avalanche Fuji.</p>
+    <div class="tags">
+      <span class="tag tag-purple">Prediction Markets</span>
+      <span class="tag tag-green">Solidity</span>
+      <span class="tag tag-green">Avalanche</span>
+      <span class="tag tag-gray">LLM Oracle</span>
+    </div>
+    <div class="project-meta"><b>IC3 Blockchain Camp 2026</b> Hackathon · Princeton · Team: Sofia Bonazzola (Yale), marwamou (Technion)</div>
+  </div>
+
+  <div class="project-item">
+    <div class="project-name">SoK: Fraud Detection on Ethereum</div>
+    <p class="project-desc">GNN pipeline classifying fraudulent Ethereum wallets — phishing scammers, hackers, wash traders — from on-chain behavioral and temporal signals. Built on the HGATE architecture with contrastive self-supervised learning.</p>
+    <div class="tags">
+      <span class="tag tag-purple">Graph ML</span>
+      <span class="tag tag-purple">GNN</span>
+      <span class="tag tag-green">Ethereum</span>
+      <span class="tag tag-gray">PyTorch</span>
+    </div>
+    <div class="project-meta">Submitted to <b>SBC Stanford 2026</b> · Advisor: Prof. Tej Anand, UMD</div>
+  </div>
+
+  <div class="project-item">
+    <div class="project-name">AIMaps.ai — AI Labor Market Intelligence</div>
+    <p class="project-desc">Pipeline on AWS Redshift tracking AI adoption across firms via millions of job postings. Fine-tuned transformers for job classification. VC network analysis over 100k+ entities.</p>
+    <div class="tags">
+      <span class="tag tag-purple">Transformers</span>
+      <span class="tag tag-gray">AWS Redshift</span>
+      <span class="tag tag-gray">NetworkX</span>
+    </div>
+    <div class="project-meta">Advisor: Prof. Anil Gupta, UMD · 2023</div>
+  </div>
+
+</section>
+
+<section id="papers">
+  <div class="section-title">Publications</div>
+  <div class="pub-item">
+    <div class="pub-title">Behavioral and Graph-Based Fraud Detection in Ethereum Networks <span class="pub-badge badge-sub">Under Review</span></div>
+    <div class="pub-meta">Khare S., Anand T. · Science of Blockchain Conference (SBC), Stanford, 2026</div>
+  </div>
+  <div class="pub-item">
+    <div class="pub-title">Harnessing Deep Learning for Cryptocurrency Price Forecasting <span class="pub-badge badge-pub">Published</span></div>
+    <div class="pub-meta">Khare S. · IConEST 2024, pp. 32–40</div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-title">Experience</div>
+
+  <div class="exp-item">
+    <div class="exp-date">2026</div>
+    <div class="exp-body">
+      <div class="exp-title">Research Assistant</div>
+      <div class="exp-org">University of Maryland, College Park</div>
+      <div class="exp-desc">Graph ML for Ethereum fraud detection. Advisor: Prof. Tej Anand, Robert H. Smith School of Business.</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2025</div>
+    <div class="exp-body">
+      <div class="exp-title">Co-founder</div>
+      <div class="exp-org">Zeno Labs, USA</div>
+      <div class="exp-desc">On-chain reputation engine for DeFi agents. $10k grant. Rust backend, Solidity contracts.</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2024</div>
+    <div class="exp-body">
+      <div class="exp-title">Data Scientist Intern</div>
+      <div class="exp-org">DMS International, Maryland</div>
+      <div class="exp-desc">LLM retrieval systems with GPT, Llama, Granite. RAG pipelines, 40% quality improvement.</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2023</div>
+    <div class="exp-body">
+      <div class="exp-title">Graduate Research Assistant</div>
+      <div class="exp-org">University of Maryland, College Park</div>
+      <div class="exp-desc">AI labor-market analysis on AWS Redshift. Transformer fine-tuning. VC network graphs at scale.</div>
+    </div>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-date">2022</div>
+    <div class="exp-body">
+      <div class="exp-title">Research Intern</div>
+      <div class="exp-org">National University of Singapore (NUS)</div>
+      <div class="exp-desc">ML models for Economic Freedom Index classification.</div>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <div>Siddharth Khare</div>
+  <div>
+    <a href="mailto:sidkhare@umd.edu">sidkhare@umd.edu</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/sidkhare7" target="_blank">GitHub</a> &nbsp;&middot;&nbsp;
+    <a href="https://linkedin.com/in/siddharth-khare-45a50b194/" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
