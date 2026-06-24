@@ -18,6 +18,7 @@
     --purple-text: #4640A8;
     --tag-bg: #EDF3EF;
     --tag-text: #1A6B47;
+    --timeline: #D4EAE0;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -25,123 +26,272 @@
     background: var(--bg);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: clamp(16px, 1.8vw, 18px);
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  .container { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+  .container { max-width: 980px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); }
 
-  /* NAV */
+  /* ── NAV ── */
   nav {
-    padding: 32px 0 26px;
+    padding: clamp(24px, 4vw, 40px) 0 clamp(20px, 3vw, 32px);
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 72px;
+    margin-bottom: clamp(52px, 8vw, 96px);
+    gap: 16px;
   }
-  .nav-name { font-size: 15px; font-weight: 600; color: var(--text); text-decoration: none; }
-  .nav-links { display: flex; gap: 24px; }
-  .nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color .15s; }
+  .nav-name {
+    font-size: clamp(17px, 2.2vw, 20px);
+    font-weight: 700; color: var(--text); text-decoration: none;
+    letter-spacing: -.02em; white-space: nowrap;
+  }
+  .nav-links {
+    display: flex; gap: clamp(18px, 3vw, 36px);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 2px;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    font-size: clamp(14px, 1.7vw, 17px);
+    font-weight: 500;
+    color: var(--muted); text-decoration: none;
+    transition: color .15s; white-space: nowrap;
+    min-height: 44px; display: flex; align-items: center;
+  }
   .nav-links a:hover { color: var(--text); }
 
-  /* HERO */
-  .hero { margin-bottom: 80px; }
-  .hero-top { display: flex; gap: 32px; align-items: flex-start; margin-bottom: 0; }
+  /* ── HERO ── */
+  .hero { margin-bottom: clamp(64px, 9vw, 104px); }
+  .hero-top { display: flex; gap: clamp(28px, 5vw, 52px); align-items: center; min-width: 0; }
   .hero-photo {
-    width: 110px; height: 110px; border-radius: 50%;
-    border: 2px solid var(--border);
-    background: #E8E8E4;
+    width: clamp(100px, 14vw, 148px);
+    height: clamp(100px, 14vw, 148px);
+    border-radius: 50%; border: 2px solid var(--border);
+    background: #E8E8E4; position: relative;
+    flex-shrink: 0; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
-    font-size: 40px; flex-shrink: 0; overflow: hidden;
+    font-size: clamp(38px, 6vw, 60px);
   }
-  .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .hero-text h1 { font-size: 30px; font-weight: 700; letter-spacing: -.03em; color: var(--text); margin-bottom: 5px; line-height: 1.2; }
-  .hero-role { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
-  .hero-bio { font-size: 15.5px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; max-width: 480px; }
-  .hero-links { display: flex; gap: 18px; flex-wrap: wrap; }
-  .hero-links a { font-size: 14px; color: var(--accent); text-decoration: none; font-weight: 500; transition: opacity .15s; }
+  .hero-photo img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .hero-text { min-width: 0; flex: 1; }
+  .hero-text h1 {
+    font-size: clamp(30px, 5.5vw, 48px);
+    font-weight: 800; letter-spacing: -.04em; color: var(--text);
+    margin-bottom: 8px; line-height: 1.1; word-break: break-word;
+  }
+  .hero-role {
+    font-size: clamp(15px, 1.9vw, 18px);
+    color: var(--muted); margin-bottom: 18px;
+  }
+  .hero-bio {
+    font-size: clamp(15px, 1.9vw, 18px);
+    color: var(--muted); line-height: 1.8; margin-bottom: 24px;
+  }
+  .hero-links { display: flex; gap: clamp(16px, 2.5vw, 28px); flex-wrap: wrap; }
+  .hero-links a {
+    font-size: clamp(14px, 1.7vw, 16px);
+    color: var(--accent); text-decoration: none; font-weight: 600;
+    transition: opacity .15s; min-height: 44px; display: flex; align-items: center;
+  }
   .hero-links a:hover { opacity: .65; }
 
-  /* SECTION */
-  section { margin-bottom: 72px; }
-  .section-title { font-size: 11px; font-weight: 700; color: var(--subtle); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 24px; }
-
-  /* INTERESTS */
-  .interest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .interest-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
-  .interest-label { font-size: 10px; font-weight: 700; color: var(--subtle); text-transform: uppercase; letter-spacing: .1em; display: block; margin-bottom: 8px; }
-  .interest-body { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
-
-  /* PROJECTS */
-  .project-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px 30px;
-    margin-bottom: 14px;
-    transition: border-color .15s, box-shadow .2s;
+  /* ── SECTION TITLES (big, bold, dark) ── */
+  section { margin-bottom: clamp(64px, 9vw, 96px); }
+  .section-title {
+    font-size: clamp(20px, 2.8vw, 26px);
+    font-weight: 800; color: var(--text);
+    letter-spacing: -.03em; margin-bottom: clamp(22px, 3vw, 36px);
   }
-  .project-item:hover { border-color: #BACED0; box-shadow: 0 4px 20px rgba(0,0,0,.05); }
-  .project-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
-  .project-name { font-size: 17px; font-weight: 600; color: var(--text); letter-spacing: -.02em; line-height: 1.3; }
-  .project-desc { font-size: 14.5px; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+
+  /* ── INTERESTS ── */
+  .interest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .interest-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: clamp(20px, 3vw, 28px);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .interest-icon-wrap {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .interest-icon-wrap.green { background: var(--accent-light); }
+  .interest-icon-wrap.purple { background: var(--purple-bg); }
+  .interest-icon-wrap.blue { background: #EEF4FD; }
+  .interest-icon-wrap svg { width: 22px; height: 22px; }
+  .interest-label {
+    font-size: 11px; font-weight: 700; color: var(--subtle);
+    text-transform: uppercase; letter-spacing: .12em; display: block;
+  }
+  .interest-body { font-size: clamp(14px, 1.6vw, 16px); color: var(--muted); line-height: 1.7; }
+
+  /* ── PROJECTS ── */
+  .project-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; padding: clamp(22px, 4vw, 36px) clamp(22px, 4vw, 38px);
+    margin-bottom: 16px; transition: border-color .15s, box-shadow .2s;
+    position: relative;
+  }
+  .project-item:hover { border-color: #BACED0; box-shadow: 0 6px 28px rgba(0,0,0,.06); }
+  .project-index {
+    position: absolute; top: clamp(18px, 3vw, 28px); right: clamp(18px, 3vw, 30px);
+    font-size: 12px; font-weight: 700; color: var(--border); letter-spacing: .04em;
+  }
+  .project-name {
+    font-size: clamp(17px, 2.2vw, 21px);
+    font-weight: 700; color: var(--text); letter-spacing: -.025em;
+    line-height: 1.3; margin-bottom: 10px; padding-right: 40px;
+    word-break: break-word;
+  }
+  .project-desc {
+    font-size: clamp(14px, 1.7vw, 16.5px);
+    color: var(--muted); line-height: 1.8; margin-bottom: 16px;
+  }
   .project-desc b { color: var(--text); font-weight: 500; }
-  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
-  .tag { font-size: 12px; font-weight: 500; padding: 3px 11px; border-radius: 20px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+  .tag { font-size: 12.5px; font-weight: 500; padding: 4px 13px; border-radius: 20px; }
   .tag-green { background: var(--tag-bg); color: var(--tag-text); }
   .tag-purple { background: var(--purple-bg); color: var(--purple-text); }
   .tag-gray { background: #F0F0EE; color: #606059; }
-  .project-meta { font-size: 12.5px; color: var(--subtle); line-height: 1.5; }
+  .project-meta { font-size: clamp(12px, 1.4vw, 14px); color: var(--subtle); line-height: 1.6; }
   .project-meta b { color: var(--muted); font-weight: 500; }
 
-  /* PUBLICATIONS */
-  .pub-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
-  .pub-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
-  .pub-meta { font-size: 13px; color: var(--muted); }
-  .pub-badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 5px; margin-left: 8px; vertical-align: middle; }
+  /* ── PUBLICATIONS ── */
+  .pub-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: clamp(18px, 3vw, 26px) clamp(20px, 3vw, 30px);
+    margin-bottom: 14px; display: flex; gap: 18px; align-items: flex-start;
+  }
+  .pub-icon {
+    width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .pub-icon.published { background: var(--accent-light); }
+  .pub-icon.review { background: var(--purple-bg); }
+  .pub-icon svg { width: 20px; height: 20px; }
+  .pub-content { flex: 1; min-width: 0; }
+  .pub-title {
+    font-size: clamp(15px, 1.8vw, 17px);
+    font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.45;
+  }
+  .pub-meta { font-size: clamp(13px, 1.5vw, 15px); color: var(--muted); }
+  .pub-badge {
+    display: inline-block; font-size: 11.5px; font-weight: 600;
+    padding: 2px 10px; border-radius: 6px; margin-left: 8px; vertical-align: middle;
+  }
   .badge-pub { background: var(--accent-light); color: var(--accent); }
   .badge-sub { background: var(--purple-bg); color: var(--purple-text); }
 
-  /* WRITINGS */
+  /* ── WRITINGS ── */
   .writing-note {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px 30px;
-    color: var(--muted);
-    font-size: 15px;
-    line-height: 1.8;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; padding: clamp(22px, 4vw, 36px) clamp(22px, 4vw, 38px);
+    color: var(--muted); font-size: clamp(15px, 1.8vw, 17px); line-height: 1.85;
   }
   .writing-note b { color: var(--text); font-weight: 600; }
-  .writing-note a { color: var(--accent); text-decoration: none; font-weight: 500; }
-  .writing-topics { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .writing-topics { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 9px; }
 
-  /* EXPERIENCE */
-  .exp-item { display: flex; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-  .exp-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-  .exp-date { width: 48px; flex-shrink: 0; font-size: 13px; color: var(--subtle); padding-top: 2px; font-weight: 500; }
-  .exp-body { flex: 1; }
-  .exp-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-  .exp-org { font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 5px; }
-  .exp-desc { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
+  /* ── EXPERIENCE TIMELINE ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 8px;
+    bottom: 8px; width: 2px; background: var(--timeline); border-radius: 2px;
+  }
+  .exp-item { position: relative; padding-bottom: clamp(24px, 4vw, 36px); }
+  .exp-item:last-child { padding-bottom: 0; }
+  .exp-dot {
+    position: absolute; left: -24px; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--surface); border: 2.5px solid var(--accent); z-index: 1;
+  }
+  .exp-dot.current { background: var(--accent); }
+  .exp-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
+  .exp-title { font-size: clamp(16px, 2vw, 18px); font-weight: 700; color: var(--text); }
+  .exp-date-chip {
+    font-size: 12px; font-weight: 600; color: var(--accent);
+    background: var(--accent-light); padding: 2px 9px; border-radius: 20px;
+  }
+  .exp-org { font-size: clamp(13px, 1.6vw, 15px); color: var(--accent); font-weight: 600; margin-bottom: 6px; }
+  .exp-desc { font-size: clamp(13.5px, 1.6vw, 15.5px); color: var(--muted); line-height: 1.7; }
 
-  /* FOOTER */
-  footer { border-top: 1px solid var(--border); padding: 30px 0 52px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--subtle); }
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: clamp(28px, 4vw, 40px) 0 clamp(40px, 6vw, 64px);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px; font-size: clamp(13px, 1.5vw, 15px); color: var(--subtle);
+  }
   footer a { color: var(--muted); text-decoration: none; }
   footer a:hover { color: var(--text); }
 
-  @media(max-width:640px){
-    .hero-top { flex-direction: column; gap: 20px; }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .interest-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    /* nav: stack name above scrollable links */
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      padding-top: 20px;
+      padding-bottom: 16px;
+      margin-bottom: 44px;
+    }
+    .nav-links {
+      width: 100%;
+      gap: 20px;
+      padding-bottom: 4px;
+    }
+
+    /* hero */
+    .hero-top { flex-direction: column; align-items: flex-start; gap: 18px; }
+    .hero { margin-bottom: 52px; }
+    .hero-links { gap: 14px; }
+    .hero-role { font-size: 15px; }
+
+    /* interests */
     .interest-grid { grid-template-columns: 1fr; }
-    .project-row { flex-direction: column; gap: 6px; }
-    nav { flex-direction: column; gap: 14px; align-items: flex-start; }
+
+    /* projects */
+    .project-item { padding: 22px 20px; }
+    .project-index { top: 18px; right: 18px; }
+
+    /* publications */
+    .pub-item { gap: 12px; }
+    .pub-icon { width: 34px; height: 34px; }
+
+    /* experience */
+    .timeline { padding-left: 22px; }
+    .exp-dot { left: -18px; }
+    .timeline::before { left: 5px; }
+    .exp-header { gap: 8px; }
+
+    /* footer */
+    footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    /* prevent any horizontal overflow */
+    .writing-note, .interest-item, .project-item, .pub-item { overflow-wrap: break-word; }
+  }
+
+  @media (max-width: 380px) {
+    .nav-name { font-size: 16px; }
+    .hero-text h1 { font-size: 26px; }
+    .section-title { font-size: 18px; }
+    .project-item { padding: 18px 16px; }
+    .pub-item { flex-direction: column; }
+    .pub-icon { display: none; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
+<!-- ── NAV ── -->
 <nav>
   <a class="nav-name" href="#">Siddharth Khare</a>
   <div class="nav-links">
@@ -153,49 +303,80 @@
   </div>
 </nav>
 
+<!-- ── HERO ── -->
 <div class="hero">
   <div class="hero-top">
     <div class="hero-photo">
-      <img src="photo.jpg" alt="Siddharth Khare" onerror="this.style.display='none'">
       🧑‍💻
+      <img src="photo.jpg" alt="Siddharth Khare">
     </div>
     <div class="hero-text">
       <h1>Siddharth Khare</h1>
-      <div class="hero-role">Researcher · Builder · University of Maryland</div>
-      <p class="hero-bio">I work on blockchain security, decentralized systems, and graph ML — and try to ship things that actually run on-chain.</p>
+      <div class="hero-role">Researcher <> Builder <> University of Maryland, College Park</div>
+      <p class="hero-bio">I like to play with decentralized systems, P2P architectures, blockchain security, and trustworthy AI. It's fun to tinker with things & find out how they break. Then, build something better and push it until it runs on real systems both off-chain and on-chain.</p>
       <div class="hero-links">
-        <a href="https://github.com/sidkhare7" target="_blank">GitHub ↗</a>
         <a href="https://linkedin.com/in/siddharth-khare-45a50b194/" target="_blank">LinkedIn ↗</a>
+        <a href="https://github.com/sidkhare7" target="_blank">GitHub ↗</a>
         <a href="mailto:sidkhare@umd.edu">sidkhare@umd.edu</a>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ── RESEARCH INTERESTS ── -->
 <section id="interests">
   <div class="section-title">Research Interests</div>
   <div class="interest-grid">
+
     <div class="interest-item">
+      <div class="interest-icon-wrap green">
+        <svg viewBox="0 0 22 22" fill="none">
+          <path d="M11 2L4 5.5v5c0 4 3 7.5 7 8.5 4-1 7-4.5 7-8.5v-5L11 2z" stroke="#1A6B47" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M8 11l2 2 4-4" stroke="#1A6B47" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <span class="interest-label">Core</span>
-      <div class="interest-body">Decentralized systems, blockchain security, trustworthy AI, distributed infrastructure</div>
+      <div class="interest-body">Decentralized systems, blockchain security, trustworthy AI, distributed infra</div>
     </div>
+
     <div class="interest-item">
+      <div class="interest-icon-wrap purple">
+        <svg viewBox="0 0 22 22" fill="none">
+          <circle cx="11" cy="11" r="2.5" stroke="#4640A8" stroke-width="1.6"/>
+          <circle cx="4"  cy="7"  r="2"   stroke="#4640A8" stroke-width="1.5"/>
+          <circle cx="18" cy="7"  r="2"   stroke="#4640A8" stroke-width="1.5"/>
+          <circle cx="4"  cy="15" r="2"   stroke="#4640A8" stroke-width="1.5"/>
+          <circle cx="18" cy="15" r="2"   stroke="#4640A8" stroke-width="1.5"/>
+          <path d="M6 8l3.3 2M15.7 8 12.7 10M6 14l3.3-2M15.7 14 12.7 12" stroke="#4640A8" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
       <span class="interest-label">Active</span>
       <div class="interest-body">P2P networks, Tribler, consensus protocols, decentralized AI, prediction markets</div>
     </div>
+
     <div class="interest-item">
+      <div class="interest-icon-wrap blue">
+        <svg viewBox="0 0 22 22" fill="none">
+          <path d="M11 3C7 3 4 6 4 9.5c0 2.2 1.1 4.1 2.8 5.3V17h8.4v-2.2C16.9 13.6 18 11.7 18 9.5 18 6 15 3 11 3z" stroke="#2563EB" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M8.5 17v2h5v-2" stroke="#2563EB" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M9 10c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2" stroke="#2563EB" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </div>
       <span class="interest-label">Learning</span>
       <div class="interest-body">TEEs, learn-to-rank, federated learning, vector search, semantic retrieval</div>
     </div>
+
   </div>
 </section>
 
+<!-- ── PROJECTS ── -->
 <section id="projects">
-  <div class="section-title">Applied Projects</div>
+  <div class="section-title">Recent Applied Projects</div>
 
   <div class="project-item">
-    <div class="project-name">On-Chain Reputation Engine — Zeno Labs</div>
-    <p class="project-desc">Scores DeFi wallets by z-normalised on-chain behavior — holding duration, value, volume — weighted by market cap. High-reputation wallets gate community access. Sybil-resistant by design. Built in Rust and Solidity.</p>
+    <div class="project-index">01</div>
+    <div class="project-name">On-Chain Reputation Engine, Zeno Labs</div>
+    <p class="project-desc">Scores DeFi wallets based on z-Score normalised on-chain behavior. High-reputation wallets gate community access. Sybil-resistant by design. Built in Rust and Solidity.</p>
     <div class="tags">
       <span class="tag tag-purple">Reputation Systems</span>
       <span class="tag tag-green">Solidity</span>
@@ -206,20 +387,22 @@
   </div>
 
   <div class="project-item">
-    <div class="project-name">Abracast — AI-Resolved Prediction Market</div>
-    <p class="project-desc">Prediction market that resolves outcomes via an on-chain LLM oracle — no human dispute resolution. Explores which questions AI can reliably answer. Bribery-resistant by design. Deployed on Avalanche Fuji.</p>
+    <div class="project-index">02</div>
+    <div class="project-name">Abracast: AI-Resolved Prediction Market</div>
+    <p class="project-desc">Prediction market that resolves outcomes via an on-chain LLM oracle with no human dispute resolution. Explores which questions AI can reliably answer. Bribery-resistant by design. Deployed on Avalanche Fuji.</p>
     <div class="tags">
       <span class="tag tag-purple">Prediction Markets</span>
       <span class="tag tag-green">Solidity</span>
       <span class="tag tag-green">Avalanche</span>
       <span class="tag tag-gray">LLM Oracle</span>
     </div>
-    <div class="project-meta"><b>IC3 Blockchain Camp 2026</b> Hackathon · Princeton · Team: Sofia Bonazzola (Yale), marwamou (Technion)</div>
+    <div class="project-meta"><b>IC3 Blockchain Camp 2026</b></div>
   </div>
 
   <div class="project-item">
+    <div class="project-index">03</div>
     <div class="project-name">SoK: Fraud Detection on Ethereum</div>
-    <p class="project-desc">GNN pipeline classifying fraudulent Ethereum wallets — phishing scammers, hackers, wash traders — from on-chain behavioral and temporal signals. Built on the HGATE architecture with contrastive self-supervised learning.</p>
+    <p class="project-desc">Systemization of different GNN pipelines classifying fraudulent Ethereum wallets: phishing scammers, hackers, wash traders from on-chain behavioral and temporal signals. Analyzed HGATE architecture with contrastive self-supervised learning.</p>
     <div class="tags">
       <span class="tag tag-purple">Graph ML</span>
       <span class="tag tag-purple">GNN</span>
@@ -230,7 +413,8 @@
   </div>
 
   <div class="project-item">
-    <div class="project-name">AIMaps.ai — AI Labor Market Intelligence</div>
+    <div class="project-index">04</div>
+    <div class="project-name"><a href="https://aimaps.ai/" target="_blank" style="color:inherit;text-decoration:none;background:var(--accent-light);border-radius:6px;padding:1px 6px;">AIMaps.ai</a>: AI Labor Market Intelligence</div>
     <p class="project-desc">Pipeline on AWS Redshift tracking AI adoption across firms via millions of job postings. Fine-tuned transformers for job classification. VC network analysis over 100k+ entities.</p>
     <div class="tags">
       <span class="tag tag-purple">Transformers</span>
@@ -241,22 +425,42 @@
   </div>
 </section>
 
+<!-- ── PUBLICATIONS ── -->
 <section id="papers">
   <div class="section-title">Publications</div>
+
   <div class="pub-item">
-    <div class="pub-title">Behavioral and Graph-Based Fraud Detection in Ethereum Networks <span class="pub-badge badge-sub">Under Review</span></div>
-    <div class="pub-meta">Khare S., Anand T. · Science of Blockchain Conference (SBC), Stanford, 2026</div>
+    <div class="pub-icon review">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M5 4h10a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="#4640A8" stroke-width="1.6"/>
+        <path d="M7 8h6M7 11h4" stroke="#4640A8" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="pub-content">
+      <div class="pub-title">Behavioral and Graph-Based Fraud Detection in Ethereum Networks <span class="pub-badge badge-sub">Under Review</span></div>
+      <div class="pub-meta">Khare S., Anand T. · Science of Blockchain Conference (SBC), Stanford, 2026</div>
+    </div>
   </div>
+
   <div class="pub-item">
-    <div class="pub-title">Harnessing Deep Learning for Cryptocurrency Price Forecasting <span class="pub-badge badge-pub">Published</span></div>
-    <div class="pub-meta">Khare S. · IConEST 2024, pp. 32–40</div>
+    <div class="pub-icon published">
+      <svg viewBox="0 0 20 20" fill="none">
+        <path d="M5 4h10a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="#1A6B47" stroke-width="1.6"/>
+        <path d="M7.5 10.5l2 2 3.5-3.5" stroke="#1A6B47" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="pub-content">
+      <div class="pub-title">Harnessing Deep Learning for Cryptocurrency Price Forecasting <span class="pub-badge badge-pub">Published</span></div>
+      <div class="pub-meta">Khare S. · IConEST 2024, pp. 32–40</div>
+    </div>
   </div>
 </section>
 
+<!-- ── WRITING ── -->
 <section id="writing">
   <div class="section-title">Writing</div>
   <div class="writing-note">
-    <b>Coming soon.</b> I plan to write about things I'm working through — decentralized systems, blockchain security, P2P infrastructure, and research notes from the field. Topics I'm thinking about:
+    <b>Coming soon.</b> I plan to write about things I'm working through: decentralized systems, blockchain security, P2P infrastructure, and research notes from the field. Topics I'm thinking about:
     <div class="writing-topics">
       <span class="tag tag-gray">Selfish mining detection</span>
       <span class="tag tag-gray">Oracle trust problems</span>
@@ -268,61 +472,70 @@
   </div>
 </section>
 
+<!-- ── EXPERIENCE ── -->
 <section id="experience">
   <div class="section-title">Experience</div>
+  <div class="timeline">
 
-  <div class="exp-item">
-    <div class="exp-date">2026</div>
-    <div class="exp-body">
-      <div class="exp-title">Research Assistant</div>
+    <div class="exp-item">
+      <div class="exp-dot current"></div>
+      <div class="exp-header">
+        <div class="exp-title">Research Assistant</div>
+        <div class="exp-date-chip">2026</div>
+      </div>
       <div class="exp-org">University of Maryland, College Park</div>
       <div class="exp-desc">Graph ML for Ethereum fraud detection. Advisor: Prof. Tej Anand, Robert H. Smith School of Business.</div>
     </div>
-  </div>
 
-  <div class="exp-item">
-    <div class="exp-date">2025</div>
-    <div class="exp-body">
-      <div class="exp-title">Co-founder</div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div class="exp-title">Co-founder</div>
+        <div class="exp-date-chip">2025</div>
+      </div>
       <div class="exp-org">Zeno Labs, USA</div>
       <div class="exp-desc">On-chain reputation engine for DeFi agents. $10k grant. Rust backend, Solidity contracts.</div>
     </div>
-  </div>
 
-  <div class="exp-item">
-    <div class="exp-date">2024</div>
-    <div class="exp-body">
-      <div class="exp-title">Data Scientist Intern</div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div class="exp-title">Data Scientist</div>
+        <div class="exp-date-chip">2024</div>
+      </div>
       <div class="exp-org">DMS International, Maryland</div>
-      <div class="exp-desc">LLM retrieval systems with GPT, Llama, Granite. RAG pipelines, 40% quality improvement.</div>
+      <div class="exp-desc">LLM retrieval systems with GPT, Llama, Granite. RAG pipelines.</div>
     </div>
-  </div>
 
-  <div class="exp-item">
-    <div class="exp-date">2023</div>
-    <div class="exp-body">
-      <div class="exp-title">Graduate Research Assistant</div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div class="exp-title">Graduate Researcher</div>
+        <div class="exp-date-chip">2023</div>
+      </div>
       <div class="exp-org">University of Maryland, College Park</div>
       <div class="exp-desc">AI labor-market analysis on AWS Redshift. Transformer fine-tuning. VC network graphs at scale.</div>
     </div>
-  </div>
 
-  <div class="exp-item">
-    <div class="exp-date">2022</div>
-    <div class="exp-body">
-      <div class="exp-title">Research Intern</div>
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-header">
+        <div class="exp-title">Visiting Researcher</div>
+        <div class="exp-date-chip">2022</div>
+      </div>
       <div class="exp-org">National University of Singapore (NUS)</div>
       <div class="exp-desc">ML models for Economic Freedom Index classification.</div>
     </div>
+
   </div>
 </section>
 
 <footer>
-  <div>Siddharth Khare</div>
+  <div>Siddharth Khare © 2026</div><div></div>
   <div>
     <a href="mailto:sidkhare@umd.edu">sidkhare@umd.edu</a> &nbsp;&middot;&nbsp;
-    <a href="https://github.com/sidkhare7" target="_blank">GitHub</a> &nbsp;&middot;&nbsp;
-    <a href="https://linkedin.com/in/siddharth-khare-45a50b194/" target="_blank">LinkedIn</a>
+    <a href="https://linkedin.com/in/siddharth-khare-45a50b194/" target="_blank">LinkedIn</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/sidkhare7" target="_blank">GitHub</a>
   </div>
 </footer>
 
